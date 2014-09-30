@@ -1,0 +1,87 @@
+package Model.RecommendationModel;
+
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSiteResult;
+import Model.RecommendationModel.CustomTypes.POJOs.User.WithinSiteUser;
+
+/**
+ * User: adav
+ */
+public interface ModuleInterface {
+    public WithinSiteResult getNearestUninformedInteresting(double x, double y);
+    public WithinSiteResult getNearestInformedInteresting(double x, double y, WithinSiteUser user);
+
+    /*
+    {
+        "results" :
+            [
+                {
+                    "name" : "facebook",
+                    "places" :
+                        [
+                            {
+                                "name" : "Selly Sausage",
+                                "description" : "Lot's of lovely sausages!!!",
+                                "location" : {"longitude" : 1.0, "latitude" : 55.323},
+
+                                "categories" : ["bar", "cafe", "restaurant"],
+                                "checkins" : 432,
+                                "fans" : 123,
+                                "footfall" : 12345,
+                                "social_name_drop" :
+                                    [
+                                        {"name" : "Jack Evans", "username" : "jev55", "service" : "facebook", "profile_picture" : "http://lolol.com/img.jpg"}
+                                    ],
+                                "links" :
+                                    [
+                                        { "name" : "website", "meta" : "http://www.sellysausage.com/" },
+                                        { "name" : "facebook", "meta" : "http://www.facebook.com/selly" },
+                                        { "name" : "twitter", "meta" : "http://www.twitter.com/selly" }
+                                    ],
+                                "pictures" :
+                                    ["http://lolol.com/img.jpg", "http://poo.com/img.jpg"]
+                            },
+                            {
+                                "name" : "Soak",
+                                "description" : "Lot's of lovely soaks!!!",
+                                "location" : {"longitude" : 1.0, "latitude" : 55.355},
+
+                                "categories" : ["bar", "pub", "restaurant"],
+                                "checkins" : 234,
+                                "fans" : 12,
+                                "footfall" : 3344,
+                                "links" :
+                                    [
+                                        { "name" : "website", "meta" : "http://www.soak.com/" },
+                                        { "name" : "facebook", "meta" : "http://www.facebook.com/soak" }
+                                    ]
+                            }
+                        ]
+                },
+                {
+                    "name" : "foursquare",
+                    "places" :
+                        [
+                            {
+                                "name" : "Selly Sausage",
+                                "description" : "Lot's of lovely sausages!!!",
+                                "location" : {"longitude" : 1.0, "latitude" : 55.323},
+
+                                "categories" : ["bar", "cafe", "restaurant"],
+                                "checkins" : 432,
+                                "fans" : 123,
+                                "footfall" : 12345,
+                                "links" :
+                                    [
+                                        { "name" : "website", "meta" : "http://www.sellysausage.com/" },
+                                        { "name" : "facebook", "meta" : "http://www.facebook.com/selly" },
+                                        { "name" : "twitter", "meta" : "http://www.twitter.com/selly" }
+                                    ],
+                                "pictures" :
+                                    ["http://lolol.com/img.jpg", "http://poo.com/img.jpg"]
+                            }
+                        ]
+                }
+            ]
+    }
+    */
+}

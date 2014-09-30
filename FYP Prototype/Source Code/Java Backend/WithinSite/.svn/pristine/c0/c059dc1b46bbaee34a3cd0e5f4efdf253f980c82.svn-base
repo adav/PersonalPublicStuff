@@ -1,0 +1,11 @@
+package Model.RecommendationModel;
+
+import Model.RecommendationModel.CustomTypes.WithinSiteUser;
+
+/**
+ * User: adav
+ */
+public interface ModelInterface {
+    public void getNearestUninformedInteresting(double x, double y);
+    public void getNearestInformedInteresting(double x, double y, WithinSiteUser user);
+}

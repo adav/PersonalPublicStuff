@@ -1,0 +1,73 @@
+package Model.RecommendationModel.CustomTypes.POJOs.Results;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Collection;
+import java.util.Date;
+
+/**
+ * User: adav
+ */
+public class WithinSitePlace extends JSONObject {
+
+    /*
+    {
+                                "name" : "Selly Sausage",
+                                "description" : "Lot's of lovely sausages!!!",
+                                "location" : {"longitude" : 1.0, "latitude" : 55.323},
+
+                                "categories" : ["bar", "cafe", "restaurant"],
+                                "checkins" : 432,
+                                "fans" : 123,
+                                "footfall" : 12345,
+                                "social_name_drop" :
+                                    [
+                                        {"name" : "Jack Evans", "username" : "jev55", "service" : "facebook", "profile_picture" : "http://lolol.com/img.jpg"}
+                                    ],
+                                "links" :
+                                    [
+                                        { "name" : "website", "meta" : "http://www.sellysausage.com/" },
+                                        { "name" : "facebook", "meta" : "http://www.facebook.com/selly" },
+                                        { "name" : "twitter", "meta" : "http://www.twitter.com/selly" }
+                                    ],
+                                "pictures" :
+                                    ["http://lolol.com/img.jpg", "http://poo.com/img.jpg"],
+
+                            }
+     */
+
+    public WithinSitePlace(String name,
+                           String description,
+                           double longitude,
+                           double latitude,
+                           String[] categories,
+                           int checkins,
+                           int fans,
+                           int footfall,
+                           Collection<WithinSiteSocialNameDrop> socialNameDrops,
+                           Collection<WithinSiteSocialLink> socialLinks,
+                           String[] pictureURLs){
+        try {
+            put("name", name);
+            put("description", description);
+            put("location", new JSONObject().append("longitude", longitude).append("latitude", latitude));
+            put("categories", categories);
+            put("checkins", checkins);
+            put("fans", fans);
+            put("footfall", footfall);
+            put("social_name_drop", socialNameDrops);
+            put("links", socialLinks);
+            put("pictures", pictureURLs);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+
+}

@@ -1,0 +1,34 @@
+package Model.RecommendationModel.CustomTypes.POJOs.Results;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Collection;
+
+/**
+ * User: adav
+ */
+public class WithinSiteResults extends JSONObject {
+
+    public WithinSiteResults(){
+    }
+
+    public WithinSiteResults(Collection<WithinSiteResult> resultsCollection) {
+        try {
+            put("results", resultsCollection);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addResult(WithinSiteResult result) {
+        try {
+
+            append("results", result);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+}

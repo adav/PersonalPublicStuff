@@ -1,0 +1,4 @@
+platform :ios
+xcodeproj 'WithinSite.xcodeproj'
+pod 'ECSlidingViewController', '~> 0.9.0'
+pod 'MBProgressHUD', '~> 0.6'

@@ -1,0 +1,15 @@
+package Model.RecommendationModel.Models;
+
+import Model.RecommendationModel.CustomTypes.LongLat;
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSiteResults;
+import Model.RecommendationModel.CustomTypes.POJOs.User.WithinSiteUser;
+
+/**
+ * User: adav
+ */
+public interface RecommendationModelInterface {
+
+    public WithinSiteResults generateRecommendedNearbyResults (WithinSiteUser user);
+    public WithinSiteResults generateUninformedNearbyResults(LongLat location);
+    public void determineIfAndSendPushNotificationRecommendation (WithinSiteUser user);
+}

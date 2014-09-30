@@ -1,0 +1,12 @@
+<gpx version='1.1'
+    creator='www.maptogps.com'
+    xmlns='http://www.topografix.com/GPX/1/1'
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xsi:schemaLocation='http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd'>
+    <rte>
+        <name>gpxdata</name>
+        <rtept lat='52.44464425443' lon='-1.9347830615239'>
+            <name>0</name>
+        </rtept>
+    </rte>
+</gpx>

@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="WithinSite">
+    <output-path>$PROJECT_DIR$/out/artifacts/WithinSite</output-path>
+    <root id="archive" name="WithinSite.war">
+      <element id="artifact" artifact-name="WithinSite:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="JavaPNS_2" />
+          <element id="library" level="project" name="log4j-1.2.15" />
+          <element id="library" level="project" name="bcprov-jdk15-146" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

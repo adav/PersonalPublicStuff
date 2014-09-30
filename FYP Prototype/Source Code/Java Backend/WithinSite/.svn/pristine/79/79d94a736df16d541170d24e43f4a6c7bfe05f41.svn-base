@@ -1,0 +1,28 @@
+package Model.RecommendationModel.Models.BasicModel.Tasks;
+
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSitePlace;
+
+import java.util.Comparator;
+
+/**
+ * User: adav
+ */
+public class WithinSitePlaceComparator implements Comparator<WithinSitePlace> {
+
+    @Override
+    public int compare(WithinSitePlace t, WithinSitePlace t1) {
+        try {
+            //!!!!!!!!!!!!!!!!!!!!!
+            //Reverse sort (so higher rate places come first!)
+            if (t.getInt("recScore") < t1.getInt("recScore")) {
+                return 1;
+            } else if (t.getInt("recScore") > t1.getInt("recScore")) {
+                return -1;
+            } else {
+                return 0;
+            }
+        } catch (Exception ex) {
+            return 0;
+        }
+    }
+}

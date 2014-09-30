@@ -1,0 +1,47 @@
+package Model.API.ASyncResponses.PushNotifications.ApplePushNotification;
+
+import Model.API.ASyncResponses.HumanFriendlyMessages;
+import Model.API.ASyncResponses.PushNotifications.PushNotificationServiceInterface;
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSitePlace;
+import javapns.Push;
+import javapns.notification.Payload;
+import javapns.notification.management.APNPayload;
+
+import java.io.InputStream;
+
+/**
+ * User: adav
+ */
+public class Apns implements PushNotificationServiceInterface {
+
+    final String CERTIFICATE_PATH = "/Model/API/ASyncResponses/PushNotifications/ApplePushNotification/pushsandbox.p12";
+    final String CERTIFICATE_PASSWORD = "withinsite";
+    final boolean CERTIFICATE_PRODUCTION = false;  //FALSE = sandbox, TRUE = production
+
+    private InputStream getCertificateStream(){
+        return getClass().getClassLoader().getResourceAsStream(CERTIFICATE_PATH);
+    }
+
+    @Override
+    public void sendRecommendationPushNotification(String token, WithinSitePlace place) {
+        try {
+            String message = HumanFriendlyMessages.composeFriendlyPushMessage(place);
+
+            Push.alert(message, getCertificateStream(), CERTIFICATE_PASSWORD, CERTIFICATE_PRODUCTION, token);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void sendSystemPushNotification(String token, String message) {
+        try {
+
+            Push.alert(message, getCertificateStream(), CERTIFICATE_PASSWORD, CERTIFICATE_PRODUCTION, token);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

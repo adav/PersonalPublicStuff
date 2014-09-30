@@ -1,0 +1,14 @@
+
+PODS:
+- ECSlidingViewController (0.9.0)
+- MBProgressHUD (0.6)
+
+DEPENDENCIES:
+- ECSlidingViewController (~> 0.9.0)
+- MBProgressHUD (~> 0.6)
+
+SPEC CHECKSUMS:
+  ECSlidingViewController: 46cb6a6cc72e359a19d2f232728be08685450d90
+  MBProgressHUD: 9b55a90566fb5d07df0602f6fd9fa04510ad5d52
+
+COCOAPODS: 0.16.4

@@ -1,0 +1,34 @@
+package Model.RecommendationModel.ServiceModules.SocialNetworks;
+
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSitePlace;
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSiteResult;
+import Model.RecommendationModel.CustomTypes.POJOs.User.WithinSiteUser;
+import Model.RecommendationModel.CustomTypes.POJOs.User.WithinSiteUserLocation;
+import Model.RecommendationModel.ModuleInterface;
+
+/**
+ * User: adav
+ */
+public class FacebookModule implements ModuleInterface {
+    @Override
+    public WithinSiteResult getNearestUninformedInterestingPlaces(double x, double y) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public WithinSiteResult getNearestInformedInterestingPlaces(double x, double y, WithinSiteUser user) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean canGetNearestPlaceForLocatingUser() {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public WithinSitePlace getNearestPlace(WithinSiteUserLocation userLocation) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+}
+                        /*select name, description, type, checkins, fan_count, were_here_count, website, page_url from page where page_id in (select page_id from location_post where author_uid IN
+                (SELECT uid2 FROM friend WHERE uid1=me()) and distance(latitude, longitude, '52.445888','-1.933197') < 400) */

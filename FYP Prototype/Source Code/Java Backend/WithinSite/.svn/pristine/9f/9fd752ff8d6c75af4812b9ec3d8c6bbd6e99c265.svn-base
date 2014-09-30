@@ -1,0 +1,7 @@
+package Model.API.ASyncResponses.PushNotifications;
+
+/**
+ * User: adav
+ */
+public interface PushNotificationManagerInterface {
+}

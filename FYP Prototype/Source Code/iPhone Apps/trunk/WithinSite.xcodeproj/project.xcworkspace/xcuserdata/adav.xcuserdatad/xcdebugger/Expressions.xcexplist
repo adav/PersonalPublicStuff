@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[WSLoginViewController registerUserOnBackendByEmail:withFacebookAccessToken:withPushNotificationToken:]:WSLoginViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(NSURLResponseInternal *)response-&gt;_internal">
+            </PersistentString>
+            <PersistentString
+               value = "(NSHTTPURLResponse)response">
+            </PersistentString>
+            <PersistentString
+               value = "(NSData *)serverResponseData">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

@@ -1,0 +1,40 @@
+package Model.RecommendationModel.CustomTypes.POJOs.Results;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Collection;
+
+/**
+ * User: adav
+ */
+public class WithinSiteServiceModuleResult extends JSONObject {
+
+    public WithinSiteServiceModuleResult(String serviceName){
+        try {
+            put("name", serviceName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public WithinSiteServiceModuleResult(String serviceName, Collection<WithinSitePlace> places){
+        try {
+            put("name", serviceName);
+            put("places", places);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addPlace(WithinSitePlace place) {
+        try {
+            append("places", place);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+}

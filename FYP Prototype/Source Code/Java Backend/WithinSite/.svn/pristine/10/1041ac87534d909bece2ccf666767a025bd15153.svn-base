@@ -1,0 +1,47 @@
+package Sandbox;
+
+import javapns.Push;
+import javapns.communication.exceptions.CommunicationException;
+import javapns.communication.exceptions.KeystoreException;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
+/**
+ * User: adav
+ */
+public class TestPushNotificationServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+
+            ServletOutputStream out = response.getOutputStream();
+
+            InputStream certStream = getClass().getClassLoader().getResourceAsStream("/Model/API/ASyncResponses/PushNotifications/ApplePushNotification/pushsandbox.p12");
+
+            out.print(certStream.toString() + "poo\n");
+
+            Properties props = System.getProperties();
+
+            for (String envName : props.stringPropertyNames()) {
+                out.print(envName + " " + props.getProperty(envName) + "\n");
+            }
+
+            out.close();
+
+            Push.alert("Hello World!", certStream , "withinsite", false, "d5a413a75b80bf2f2b3f6670098a8f09c6743b76f4d4dc97ccb0da49fa365365");
+        } catch (CommunicationException e) {
+            e.printStackTrace();
+        } catch (KeystoreException e) {
+            e.printStackTrace();
+        }
+    }
+}

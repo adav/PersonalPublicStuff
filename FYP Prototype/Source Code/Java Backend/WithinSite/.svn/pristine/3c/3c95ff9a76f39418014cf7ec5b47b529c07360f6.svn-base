@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+           version="2.5">
+
+    <servlet>
+        <description>Register user to database</description>
+        <display-name>RegisterUser</display-name>
+        <servlet-name>RegisterUserServlet</servlet-name>
+        <servlet-class>Model.API.Users.RegisterUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InitialiseDatabaseServlet</servlet-name>
+        <servlet-class>Model.InitialiseDatabaseServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>TestPushNotificationServlet</servlet-name>
+        <servlet-class>Sandbox.TestPushNotificationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegisterUserServlet</servlet-name>
+        <url-pattern>/RegisterUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>InitialiseDatabaseServlet</servlet-name>
+        <url-pattern>/InitialiseDB</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>TestPushNotificationServlet</servlet-name>
+        <url-pattern>/TestPush</url-pattern>
+    </servlet-mapping>
+</web-app>

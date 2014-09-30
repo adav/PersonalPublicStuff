@@ -1,0 +1,21 @@
+package Model;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import com.mongodb.*;
+
+/**
+ * User: adav
+ */
+public class InitialiseDatabaseServlet extends HttpServlet {
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
+       /* DB db = Util.getDB();
+
+        DBCollection usersColl = db.getCollection("withinsite.users");
+          */
+    }
+}

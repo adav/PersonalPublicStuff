@@ -1,0 +1,126 @@
+package Model.RecommendationModel.CustomTypes.POJOs.Results;
+
+import Model.RecommendationModel.CustomTypes.LongLat;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Collection;
+import java.util.Date;
+
+/**
+ * User: adav
+ */
+public class WithinSitePlace extends JSONObject {
+
+    /*
+    {
+                                "name" : "Selly Sausage",
+                                "description" : "Lot's of lovely sausages!!!",
+                                "location" : {"longitude" : 1.0, "latitude" : 55.323},
+
+                                "categories" : ["bar", "cafe", "restaurant"],
+                                "checkins" : 432,
+                                "fans" : 123,
+                                "footfall" : 12345,
+                                "social_name_drop" :
+                                    [
+                                        {"name" : "Jack Evans", "username" : "jev55", "service" : "facebook", "profile_picture" : "http://lolol.com/img.jpg"}
+                                    ],
+                                "links" :
+                                    [
+                                        { "name" : "website", "meta" : "http://www.sellysausage.com/" },
+                                        { "name" : "facebook", "meta" : "http://www.facebook.com/selly" },
+                                        { "name" : "twitter", "meta" : "http://www.twitter.com/selly" }
+                                    ],
+                                "pictures" :
+                                    ["http://lolol.com/img.jpg", "http://poo.com/img.jpg"],
+
+                            }
+     */
+
+    public WithinSitePlace(String name,
+                           String description,
+                           double longitude,
+                           double latitude,
+                           String[] categories,
+                           int checkins,
+                           int fans,
+                           long footfall,
+                           Collection<WithinSiteSocialNameDrop> socialNameDrops,
+                           Collection<WithinSiteSocialLink> socialLinks,
+                           String[] pictureURLs,
+                           String serviceId,
+                           boolean verified){
+        try {
+            put("name", name);
+            put("description", description);
+            put("location", new JSONObject().append("longitude", longitude).append("latitude", latitude));
+            put("categories", categories);
+            put("checkins", checkins);
+            put("fans", fans);
+            put("footfall", footfall);
+            put("social_name_drop", socialNameDrops);
+            put("links", socialLinks);
+            put("pictures", pictureURLs);
+            put("service_id", serviceId);
+            put("verified", verified);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public String getPlaceName(){
+        return optString("name");
+    }
+
+    public String getPlaceDescription(){
+        return optString("description");
+    }
+
+    public LongLat getPlaceLocation(){
+        JSONObject location = optJSONObject("location");
+        return new LongLat(location.optDouble("longitude"), location.optDouble("latitude"));
+    }
+
+    public String[] getPlaceCategories(){
+        JSONArray jsonCatsArray = optJSONArray("categories");
+        String[] categories = new String[jsonCatsArray.length()];
+        for(int i = 0; i < categories.length; i++){
+            try {
+                categories[i] = jsonCatsArray.getString(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return categories;
+    }
+
+    public int getPlaceCheckins(){
+        return optInt("checkins");
+    }
+
+    public int getPlaceFans(){
+        return optInt("fans");
+    }
+
+    public long getPlaceFootfall(){
+        return optInt("footfall");
+    }
+
+    public int getPlaceSocialNameDropCount(){
+        return optJSONArray("social_name_drop").length();
+    }
+
+    public boolean getPlaceVerified(){
+        return optBoolean("verfied");
+    }
+
+    public String getPlaceServiceId(){
+        return optString("service_id");
+    }
+
+}

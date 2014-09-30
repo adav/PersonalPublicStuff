@@ -1,0 +1,25 @@
+package Model.API.Requests.SimpleNearbySocial;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * User: adav
+ */
+public class NearbyServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // Find Nearby Recommended Places TODO
+        // Find Nearby Foursquare Places
+        // Find Nearby Places that Facebook Friends have been to
+                /*select name, description, type, checkins, fan_count, were_here_count, website, page_url from page where page_id in (select page_id from location_post where author_uid IN
+                (SELECT uid2 FROM friend WHERE uid1=me()) and distance(latitude, longitude, '52.445888','-1.933197') < 400) */
+    }
+}

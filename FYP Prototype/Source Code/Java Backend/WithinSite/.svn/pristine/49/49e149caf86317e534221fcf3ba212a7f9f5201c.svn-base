@@ -1,0 +1,31 @@
+package Model.RecommendationModel.CustomTypes.POJOs.Results;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ * User: adav
+ */
+public class WithinSiteSocialNameDrop extends JSONObject {
+
+    enum Relation{
+        FRIEND,
+        RECOMMENDATION,
+        MAYOR
+    }
+
+    //{"name" : "Jack Evans", "username" : "jev55", "service" : "facebook", "profile_picture" : "http://lolol.com/img.jpg"}
+
+    public WithinSiteSocialNameDrop(String name, String username, String service, Relation relation, String pictureURL){
+        try {
+            put("name", name);
+            put("username", username);
+            put("service", service);
+            put("relation", relation.name());
+            put("profile_picture", pictureURL);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+}

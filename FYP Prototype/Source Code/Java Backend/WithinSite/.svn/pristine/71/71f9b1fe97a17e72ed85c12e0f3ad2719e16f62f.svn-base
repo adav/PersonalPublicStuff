@@ -1,0 +1,54 @@
+package Model.API.Requests.Users;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import com.mongodb.*;
+import org.json.JSONObject;
+
+/**
+ * User: adav
+ */
+public class RegisterUserServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ServletOutputStream out = response.getOutputStream();
+        response.setContentType("application/json");
+
+            try {
+            DB db = Model.Util.getDB();
+            DBCollection userColl = db.getCollection("withinsite.users");
+
+            BasicDBObject user = new BasicDBObject();
+            user.put("email", request.getParameter("email"));
+            user.put("fb_access_token", request.getParameter("fb_access_token"));
+            user.put("push_token", request.getParameter("push_token"));
+            user.put("device_registered", request.getParameter("device_registered"));
+
+            // save it into collection named "yourCollection"
+            userColl.insert(user);
+
+            DBCursor dbCursor = userColl.find(new BasicDBObject("email", request.getParameter("email")));
+
+            if(dbCursor.count() > 1){
+                throw new Exception("User already exists with email provided.");
+            }
+
+            try {
+                while(dbCursor.hasNext()) {
+                    out.print(String.valueOf(dbCursor.next()));
+                }
+            } finally {
+                dbCursor.close();
+            }
+
+        } catch (Exception e) {
+            out.print("{\"result\":\"error\"}");
+        }
+        out.close();
+    }
+}

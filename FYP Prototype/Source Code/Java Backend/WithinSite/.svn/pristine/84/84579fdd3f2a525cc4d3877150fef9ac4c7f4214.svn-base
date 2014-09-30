@@ -1,0 +1,83 @@
+package Model.RecommendationModel.Models.BasicModel;
+
+import Model.RecommendationModel.CustomTypes.LongLat;
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSiteResults;
+import Model.RecommendationModel.CustomTypes.POJOs.User.WithinSiteUser;
+import Model.RecommendationModel.Models.BasicModel.Tasks.FindNearby;
+import Model.RecommendationModel.Models.RecommendationModelInterface;
+import Model.RecommendationModel.ServiceModules.SocialNetworks.FoursquareModule;
+
+import java.util.concurrent.*;
+
+/**
+ * User: adav
+ */
+public class BasicModel implements RecommendationModelInterface{
+
+    private ThreadPoolExecutor threadPoolExecutor;
+
+    public BasicModel(){
+        threadPoolExecutor = new ThreadPoolExecutor(5, 100, 5000l, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
+
+    }
+
+    @Override
+    public WithinSiteResults generateRecommendedNearbyResults(WithinSiteUser user) {
+//        FutureTask<WithinSiteResults> task = new FutureTask<WithinSiteResults>(new FindNearby(user));
+//        threadPoolExecutor.execute(task);
+//        try {
+//            return task.get();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+        return null;
+    }
+
+    @Override
+    public WithinSiteResults generateUninformedNearbyResults(LongLat location) {
+//        FutureTask<WithinSiteResults> task = new FutureTask<WithinSiteResults>(new FindNearby(location));
+//        threadPoolExecutor.execute(task);
+//        try {
+//            return task.get();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+        FoursquareModule foursquareModule = new FoursquareModule();
+
+        WithinSiteResults results = new WithinSiteResults();
+        results.addResult(foursquareModule.getNearestUninformedInteresting(location.getLongitude(), location.getLatitude()));
+
+        return results;
+    }
+
+    @Override
+    public void determineIfAndSendPushNotificationRecommendation(WithinSiteUser user) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+
+    /* JAVA ORACLE EXAMPLE FOR REFERENCE:
+    private ThreadPoolExecutor tpe;
+
+
+  public SingleThreadAccess() {
+    tpe = new ThreadPoolExecutor(1, 1, 50000L, TimeUnit.SECONDS,
+        new LinkedBlockingQueue<Runnable>());
+  }
+
+  public void invokeLater(Runnable r) {
+    tpe.execute(r);
+  }
+
+  public void invokeAneWait(Runnable r) throws InterruptedException, ExecutionException {
+    FutureTask task = new FutureTask(r, null);
+    tpe.execute(task);
+    task.get();
+  }
+
+  public void shutdown() {
+    tpe.shutdown();
+  }*/
+}

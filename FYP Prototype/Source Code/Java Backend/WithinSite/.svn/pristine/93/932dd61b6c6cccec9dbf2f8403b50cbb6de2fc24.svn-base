@@ -1,0 +1,194 @@
+package Model.RecommendationModel.ServiceModules.SocialNetworks;
+
+import Model.RecommendationModel.CustomTypes.POJOs.Results.*;
+import Model.RecommendationModel.CustomTypes.POJOs.User.*;
+import Model.RecommendationModel.ModuleInterface;
+import fi.foyt.foursquare.api.*;
+import fi.foyt.foursquare.api.entities.*;
+
+import org.apache.log4j.Logger;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+
+
+/**
+ * User: adav
+ */
+public class FoursquareModule implements ModuleInterface {
+
+    protected static final Logger logger = Logger.getLogger(FoursquareModule.class);
+
+
+    final String WITHINSITERESULT_IDENTIFICATION = "foursquare";
+
+    final String CLIENT_ID = "IEHH1I3RI3XVD1OKUPSLVW5EAMNIFYOT0NJBT2GTUN4ZTCQ3";
+    final String CLIENT_SECRET = "0YKNIJWJK14QLMSWGDDCY3QDHIXRQUJK3LAGBZ5W3EIBFEWL";
+    final String CLIENT_REDIRECT_URL = "localhost";
+
+    @Override
+    public WithinSiteResult getNearestUninformedInterestingPlaces(double x, double y) {
+
+        WithinSiteResult returnCollection = new WithinSiteResult(WITHINSITERESULT_IDENTIFICATION);
+
+        FoursquareApi foursquareApi =  new FoursquareApi(CLIENT_ID, CLIENT_SECRET, CLIENT_REDIRECT_URL);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("ll", y + "," + x);//Silly Foursquare, not obvious which way round!
+
+        try {
+            Result<VenuesSearchResult> result = foursquareApi.venuesSearch(params);
+
+            if(result.getMeta().getCode() == 200){
+                for(CompactVenue venue : result.getResult().getVenues()){
+                    CompleteVenue completeVenue = foursquareApi.venue(venue.getId()).getResult();
+
+                    //Build Social Name Drop List
+                    ArrayList<WithinSiteSocialNameDrop> socialNameDrops = new ArrayList<WithinSiteSocialNameDrop>();
+                    if(completeVenue.getMayor() != null){
+                        Mayor mayor = completeVenue.getMayor();
+                        socialNameDrops.add(new WithinSiteSocialNameDrop(
+                                mayor.getUser().getFirstName() + " " + mayor.getUser().getLastName(),
+                                mayor.getUser().getId(),
+                                "foursquare",
+                                WithinSiteSocialNameDrop.Relation.MAYOR,
+                                mayor.getUser().getPhoto()));
+                    }
+
+                    //Build Links List
+                    ArrayList<WithinSiteSocialLink> links = new ArrayList<WithinSiteSocialLink>();
+                    links.add(new WithinSiteSocialLink("foursquare", completeVenue.getShortUrl()));
+                    if(completeVenue.getUrl() != null){
+                        links.add(new WithinSiteSocialLink("url", completeVenue.getUrl()));
+                    }
+                    if(completeVenue.getContact().getFacebook() != null){
+                        links.add(new WithinSiteSocialLink("facebook", completeVenue.getContact().getFacebook()));
+                    }
+                    if(completeVenue.getContact().getTwitter() != null){
+                        links.add(new WithinSiteSocialLink("twitter", completeVenue.getContact().getTwitter()));
+                    }
+
+                    //Build Photos List
+                    returnCollection.addPlace(new WithinSitePlace(
+                            completeVenue.getName(),
+                            completeVenue.getDescription(),
+                            completeVenue.getLocation().getLng(),
+                            completeVenue.getLocation().getLat(),
+                            convertFoursquareCategoriestoStringArray(completeVenue.getCategories()),
+                            completeVenue.getStats().getCheckinsCount(),
+                            completeVenue.getStats().getUsersCount(),
+                            0,
+                            socialNameDrops,//HACK
+                            links,
+                            convertPhotosArrayToURLStringArray(completeVenue.getPhotos()),
+                            completeVenue.getId(),
+                            completeVenue.getVerified()
+                            ));
+                }
+            } else {
+                throw new Exception("[DEBUG] Failed to connect to Foursquare API.");
+            }
+
+
+        } catch (Exception e) {
+            logger.warn("Error populating Foursquare queries to WithinSiteResult places.");
+            e.printStackTrace();
+        }
+        return returnCollection;
+    }
+
+    @Override
+    public WithinSiteResult getNearestInformedInterestingPlaces(double x, double y, WithinSiteUser user) {
+        //Result<Recommended> result = foursquareApi.venuesExplore(y + "," + x, null, null, null, null, "topPicks", null, 20, null);
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean canGetNearestPlaceForLocatingUser() {
+        return true;
+    }
+
+    @Override
+    public WithinSitePlace getNearestPlace(WithinSiteUserLocation userLocation) {
+        FoursquareApi foursquareApi =  new FoursquareApi(CLIENT_ID, CLIENT_SECRET, CLIENT_REDIRECT_URL);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("ll", userLocation.getLatitude() + "," + userLocation.getLongitude());//Silly Foursquare, not obvious which way round!
+        params.put("limit", "5");
+        params.put("intent", "checkin");
+        params.put("radius", "100");
+
+        WithinSitePlace place = null;
+
+        try {
+            Result<VenuesSearchResult> result = foursquareApi.venuesSearch(params);
+
+            if(result.getMeta().getCode() == 200){
+                for(CompactVenue venue : result.getResult().getVenues()){
+
+                    CompleteVenue completeVenue = foursquareApi.venue(venue.getId()).getResult();
+
+                    WithinSitePlace newPlace = new WithinSitePlace(
+                            completeVenue.getName(),
+                            completeVenue.getDescription(),
+                            completeVenue.getLocation().getLng(),
+                            completeVenue.getLocation().getLat(),
+                            convertFoursquareCategoriestoStringArray(completeVenue.getCategories()),
+                            completeVenue.getStats().getCheckinsCount(),
+                            completeVenue.getStats().getUsersCount(),
+                            0,
+                            null,//HACK
+                            null,
+                            null,
+                            completeVenue.getId(),
+                            completeVenue.getVerified()
+                    );
+
+                    if (place == null){
+                        place = newPlace;
+                    } else if (place.getPlaceLocation().distanceFromPosition(userLocation.getLatLong())
+                            > newPlace.getPlaceLocation().distanceFromPosition(userLocation.getLatLong()) + 30){
+                        //more than 30 meters closer
+                        place = newPlace;
+                    } else  if (place.getPlaceLocation().distanceFromPosition(newPlace.getPlaceLocation()) < userLocation.getAccuracy()
+                            && newPlace.getPlaceCheckins() > (place.getPlaceCheckins() * 1.5)){
+                        //within the accuracy radius but more than half as many checkins
+                        place = newPlace;
+                    }
+
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+        return place;
+    }
+
+    private static String[] convertFoursquareCategoriestoStringArray(Category[] venueCats){
+        ArrayList<String> cats = new ArrayList<String>();
+
+        for(Category cat : venueCats){
+            Collections.addAll(cats, cat.getParents());
+            cats.add(cat.getName());
+        }
+
+        return cats.toArray(new String[cats.size()]);
+    }
+
+    private static String[] convertPhotosArrayToURLStringArray(Photos photos){
+        ArrayList<String> photoURLs = new ArrayList<String>(photos.getCount().intValue());
+        for(PhotoGroup group : photos.getGroups()){
+            for(Photo photo : group.getItems()){
+                photoURLs.add(photo.getUrl());
+            }
+        }
+
+        return photoURLs.toArray(new String[photoURLs.size()]);
+    }
+
+
+}

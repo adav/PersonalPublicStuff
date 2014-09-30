@@ -1,0 +1,25 @@
+package Model;
+
+/**
+ * User: adav
+ */
+
+import com.mongodb.*;
+
+import java.net.UnknownHostException;
+
+public class Util {
+
+    public static DB getDB(){
+        try{
+            //Mongo mongo = new Mongo("dbteach2.cs.bham.ac.uk");
+            MongoClient mongoClient = new MongoClient("localhost");                        //dbteach2.cs.bham.ac.uk
+            DB db = mongoClient.getDB("axd967");
+            boolean auth = db.authenticate("axd967", "mymriEdUd".toCharArray());
+            return db;
+        } catch (UnknownHostException ex){
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+}

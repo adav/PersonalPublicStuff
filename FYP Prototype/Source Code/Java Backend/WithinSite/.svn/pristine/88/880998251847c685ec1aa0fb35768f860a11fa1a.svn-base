@@ -1,0 +1,13 @@
+package Model.RecommendationModel.CustomTypes;
+
+/**
+ * User: adav
+ */
+public class WithinSiteUser {
+    public String mongoId;
+    public String name;
+    public String email;
+    public String fbAccessToken;
+    public String pushNotificationToken;
+    public SupportedDevices deviceType;
+}

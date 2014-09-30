@@ -1,0 +1,8 @@
+package Model.RecommendationModel;
+
+/**
+ * User: adav
+ */
+public interface ModelInterface {
+    public void getNearestInteresting(double x, double y);
+}

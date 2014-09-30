@@ -1,0 +1,7 @@
+package Model.RecommendationModel.CustomTypes.POJOs.User.RecommendationPreferences;
+
+/**
+ * User: adav
+ */
+public class WithinSiteUserRecPrefsPlace {
+}

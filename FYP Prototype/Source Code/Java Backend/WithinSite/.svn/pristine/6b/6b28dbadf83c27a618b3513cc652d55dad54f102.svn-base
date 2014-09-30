@@ -1,0 +1,45 @@
+package Model.RecommendationModel.CustomTypes;
+
+import com.mongodb.BasicDBObject;
+import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
+
+/**
+ * User: adav
+ */
+public class WithinSiteUser extends BasicDBObject{
+
+    public WithinSiteUser(String email, String fbAccessToken, String pushNotificationToken, SupportedDevices deviceType){
+        put("email", email);
+        put("fb_access_token", fbAccessToken);
+        put("push_token", pushNotificationToken);
+        put("device_registered", deviceType.toString());
+    }
+
+    public ObjectId getMongoId(){
+        return getObjectId("_id");
+    }
+
+    public String getEmail(){
+        return getString("email");
+    }
+
+    public String getFbAccessToken(){
+        return getString("fb_access_token");
+    }
+
+    public String getPushNotificationToken(){
+        return getString("push_token");
+    }
+
+    public SupportedDevices getDeviceType(){
+        return SupportedDevices.valueOf(getString("device_registered"));
+    }
+
+    public ArrayList<WithinSiteUserLocations> getLocations(){
+        return (ArrayList<WithinSiteUserLocations>) get("locations");
+    }
+
+
+}

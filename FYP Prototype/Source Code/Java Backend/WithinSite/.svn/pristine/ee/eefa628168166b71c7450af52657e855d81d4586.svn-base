@@ -1,0 +1,188 @@
+package Model.RecommendationModel.ServiceModules.SocialNetworks;
+
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSitePlace;
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSiteResult;
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSiteSocialLink;
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSiteSocialNameDrop;
+import Model.RecommendationModel.CustomTypes.POJOs.User.WithinSiteUser;
+import Model.RecommendationModel.ModuleInterface;
+import fi.foyt.foursquare.api.*;
+import fi.foyt.foursquare.api.entities.*;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+
+
+/**
+ * User: adav
+ */
+public class FoursquareModule implements ModuleInterface {
+
+    protected static final Logger logger = Logger.getLogger(FoursquareModule.class);
+
+
+    final String WITHINSITERESULT_IDENTIFICATION = "foursquare";
+
+    final String CLIENT_ID = "IEHH1I3RI3XVD1OKUPSLVW5EAMNIFYOT0NJBT2GTUN4ZTCQ3";
+    final String CLIENT_SECRET = "0YKNIJWJK14QLMSWGDDCY3QDHIXRQUJK3LAGBZ5W3EIBFEWL";
+    final String CLIENT_REDIRECT_URL = "localhost";
+
+    @Override
+    public WithinSiteResult getNearestUninformedInteresting(double x, double y) {
+
+        WithinSiteResult returnCollection = new WithinSiteResult(WITHINSITERESULT_IDENTIFICATION);
+
+        FoursquareApi foursquareApi =  new FoursquareApi(CLIENT_ID, CLIENT_SECRET, CLIENT_REDIRECT_URL);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("ll", y + "," + x);//Silly Foursquare, not obvious which way round!
+
+        try {
+            Result<VenuesSearchResult> result = foursquareApi.venuesSearch(params);
+
+
+
+            if(result.getMeta().getCode() == 200){
+                for(CompactVenue venue : result.getResult().getVenues()){
+                    CompleteVenue completeVenue = foursquareApi.venue(venue.getId()).getResult();
+
+                    //Build Social Name Drop List
+                    //Build Links List
+                    ArrayList<WithinSiteSocialLink> links = new ArrayList<WithinSiteSocialLink>();
+                    links.add(new WithinSiteSocialLink("foursquare", completeVenue.getShortUrl()));
+                    if(completeVenue.getUrl() != null){
+                        links.add(new WithinSiteSocialLink("url", completeVenue.getUrl()));
+                    }
+                    if(completeVenue.getContact().getFacebook() != null){
+                        links.add(new WithinSiteSocialLink("facebook", completeVenue.getContact().getFacebook()));
+                    }
+                    if(completeVenue.getContact().getTwitter() != null){
+                        links.add(new WithinSiteSocialLink("twitter", completeVenue.getContact().getTwitter()));
+                    }
+
+                    //Build Photos List
+                    returnCollection.addPlace(new WithinSitePlace(
+                            completeVenue.getName(),
+                            completeVenue.getDescription(),
+                            completeVenue.getLocation().getLng(),
+                            completeVenue.getLocation().getLat(),
+                            convertFoursquareCategoriestoStringArray(completeVenue.getCategories()),
+                            completeVenue.getStats().getCheckinsCount(),
+                            completeVenue.getStats().getUsersCount(),
+                            0,
+                            new ArrayList<WithinSiteSocialNameDrop>(),//HACK
+                            links,
+                            convertPhotosArrayToURLStringArray(completeVenue.getPhotos()),
+                            completeVenue.getVerified()
+                            ));
+                }
+            } else {
+                throw new Exception("[DEBUG] Failed to connect to Foursquare API.");
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return returnCollection;
+    }
+
+    @Override
+    public WithinSiteResult getNearestInformedInteresting(double x, double y, WithinSiteUser user) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    private static String[] convertFoursquareCategoriestoStringArray(Category[] venueCats){
+        ArrayList<String> cats = new ArrayList<String>();
+
+        for(Category cat : venueCats){
+            Collections.addAll(cats, cat.getParents());
+            cats.add(cat.getName());
+        }
+
+        return cats.toArray(new String[cats.size()]);
+    }
+
+    private static String[] convertPhotosArrayToURLStringArray(Photos photos){
+        ArrayList<String> photoURLs = new ArrayList<String>(photos.getCount().intValue());
+        for(PhotoGroup group : photos.getGroups()){
+            for(Photo photo : group.getItems()){
+                photoURLs.add(photo.getUrl());
+            }
+        }
+
+        return photoURLs.toArray(new String[photoURLs.size()]);
+    }
+
+
+}
+       /*        throws ServletException, IOException {
+        response.setContentType("application/json;charset=UTF-8");
+        //response.setCharacterEncoding("charset=UTF-8");
+
+        PrintWriter out = response.getWriter();
+
+        String longitude = request.getParameter("longitude");
+        String latitude = request.getParameter("latitude");
+
+        JSONObject jsonResponse = new JSONObject();
+
+        if (longitude == null || latitude == null) {
+            String errorResponse;
+            try {
+                errorResponse = jsonResponse.put("ERROR", true).toString();
+            } catch (JSONException ex) {
+                errorResponse = "ERROR";
+            }
+            out.println(errorResponse);
+            out.close();
+            return;
+        }
+
+        FoursquareApi foursquareApi = new FoursquareApi("IEHH1I3RI3XVD1OKUPSLVW5EAMNIFYOT0NJBT2GTUN4ZTCQ3", "0YKNIJWJK14QLMSWGDDCY3QDHIXRQUJK3LAGBZ5W3EIBFEWL", "localhost");
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("ll", latitude + "," + longitude);//Silly Foursquare, not obvious which way round!
+
+        JSONArray jsonArrayResponse = new JSONArray();
+        SortedSet<JSONObject> sortedPlaces = new TreeSet<JSONObject>(new JSONObjectRecScoreComparator());
+
+        try {
+            Result<VenuesSearchResult> result = foursquareApi.venuesSearch(params);
+            if (result.getMeta().getCode() == 200) {
+                for (CompactVenue venue : result.getResult().getVenues()) {
+                    try {
+
+                        sortedPlaces.add(new JSONObject()
+                                .put("name", venue.getName())
+                                .put("categories", convertFoursquareCategoriestoJSON(venue.getCategories()))
+                                .put("facebook",  venue.getContact().getFacebook())
+                                .put("twitter",  venue.getContact().getTwitter())
+                                .put("fsVerified", venue.getVerified())
+                                .put("longitude", venue.getLocation().getLng())
+                                .put("latitude", venue.getLocation().getLat())
+                                .put("recScore",  FoursquareRecScorer.score(venue))
+                                );
+
+                    } catch (JSONException ex) {
+                        Logger.getLogger(NearbyFourSquareLocations.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            }
+        } catch (FoursquareApiException ex) {
+            out.println(ex.getMessage());
+        }
+
+        try {
+            jsonArrayResponse.put(sortedPlaces);
+            out.println(jsonResponse.put("places", jsonArrayResponse).toString(5));
+        } catch (JSONException ex) {
+            Logger.getLogger(NearbyFourSquareLocations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        out.close();*/

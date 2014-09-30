@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="WithinSite:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/WithinSite_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="WithinSite/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="WithinSite" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mongo-2.10.1" />
+          <element id="library" level="project" name="foursquare-api-1.0.2" />
+          <element id="library" level="project" name="json-20090211" />
+          <element id="library" level="project" name="JavaPNS_2.2" />
+          <element id="library" level="project" name="bcprov-jdk15-146" />
+          <element id="library" level="project" name="log4j-1.2.15" />
+          <element id="library" level="project" name="facebook4j-core-1.1.3" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

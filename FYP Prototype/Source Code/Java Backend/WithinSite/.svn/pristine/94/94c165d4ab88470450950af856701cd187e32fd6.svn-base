@@ -1,0 +1,18 @@
+package Model.RecommendationModel.Models;
+
+import Model.RecommendationModel.Models.BasicModel.BasicModel;
+
+/**
+ * User: adav
+ */
+public class RecommendationModel {
+
+    //Change this class to switch models
+
+    private static BasicModel ourInstance = new BasicModel();
+
+    public static BasicModel getModel() {
+        return ourInstance;
+    }
+
+}

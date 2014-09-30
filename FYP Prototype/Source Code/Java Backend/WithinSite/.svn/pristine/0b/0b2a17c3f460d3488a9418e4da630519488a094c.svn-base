@@ -1,0 +1,21 @@
+package Model.RecommendationModel.ServiceModules.WithinSiteServices;
+
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSiteResult;
+import Model.RecommendationModel.CustomTypes.POJOs.User.WithinSiteUser;
+import Model.RecommendationModel.ModuleInterface;
+
+/**
+ * User: adav
+ */
+public class AdvertsModule implements ModuleInterface{
+
+    @Override
+    public WithinSiteResult getNearestUninformedInteresting(double x, double y) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public WithinSiteResult getNearestInformedInteresting(double x, double y, WithinSiteUser user) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+}

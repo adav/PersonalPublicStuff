@@ -1,0 +1,20 @@
+package Model.RecommendationModel.Models.BasicModel.Tasks;
+
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSitePlace;
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSiteServiceModuleResult;
+import Model.RecommendationModel.CustomTypes.POJOs.User.WithinSiteUser;
+
+/**
+ * User: adav
+ */
+public class PlaceRater {
+
+    public static WithinSitePlace findRecommendationForUser (WithinSiteUser user, WithinSiteServiceModuleResult places){
+
+        return null;
+    }
+
+    public static WithinSiteServiceModuleResult orderResultsForUser (WithinSiteUser user, WithinSiteServiceModuleResult places){
+        return null;
+    }
+}

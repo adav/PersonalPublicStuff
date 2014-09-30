@@ -1,0 +1,18 @@
+{"_id": ObjectId("51258efd903e0725c125c2e3"),
+"device_registered" : "IPHONE",
+"email" : "andrewdavidson7@gmail.com",
+"fb_access_token" : "BAAEn67bKsQIBADr1fvR7zgG9zhh1jArd6FM20ZABiaR8vGuV4EZCrZAZB7d466ZAFERpewZBM5omDkRkGxygZBHi45hkjEAuw7iKb7w8FPzZAUMwq9mZAj6soRcWZAuNcQoMcIuq1nZB7oJFAyHsXTxSrSqEnt1hhGt0mv6uTEZALtsZBTJnxmEakFssqwyrIeWoV1LxqZAZCXhSP8KUCxjM7RA7I0KVdZAr1SllZAq6nXf5id7oo1AZDZD",
+"locations" : [
+{     "longitude" : "-1.932409",     "latitude" : "52.446661",     "accuracy" : "50.000000",     "updated" : ISODate("2013-02-21T03:05:40.905Z") },
+{     "longitude" : "-1.929864",     "latitude" : "52.451657",     "accuracy" : "65.000000",     "updated" : ISODate("2013-02-21T10:05:18.754Z") },
+{     "longitude" : "-1.935534",     "latitude" : "52.448519",     "accuracy" : "10.000000",     "updated" : ISODate("2013-02-21T11:02:39.602Z") },
+{     "longitude" : "-1.936530",     "latitude" : "52.443354",     "accuracy" : "65.000000",     "updated" : ISODate("2013-02-21T16:34:20.994Z") },
+{     "longitude" : "-1.943933",     "latitude" : "52.444958",     "accuracy" : "5.000000",     "updated" : ISODate("2013-02-21T16:37:19.488Z") },
+{     "longitude" : "-1.948409",     "latitude" : "52.448898",     "accuracy" : "5.000000",     "updated" : ISODate("2013-02-21T16:38:21.921Z") },
+{     "longitude" : "-1.954176",     "latitude" : "52.452045",     "accuracy" : "5.000000",     "updated" : ISODate("2013-02-21T16:38:45.540Z") },
+{     "longitude" : "-1.955343",     "latitude" : "52.456695",     "accuracy" : "5.000000",     "updated" : ISODate("2013-02-21T16:39:14.023Z") },
+{     "longitude" : "-1.952635",     "latitude" : "52.451304",     "accuracy" : "65.000000",     "updated" : ISODate("2013-02-21T17:01:26.292Z") },
+{     "longitude" : "-1.946265",     "latitude" : "52.448870",     "accuracy" : "65.000000",     "updated" : ISODate("2013-02-21T17:02:42.931Z") },
+{     "longitude" : "-1.938802",     "latitude" : "52.441025",     "accuracy" : "65.000000",     "updated" : ISODate("2013-02-21T17:06:03.937Z") },
+{     "longitude" : "-1.934961",     "latitude" : "52.444722",     "accuracy" : "65.000000",     "updated" : ISODate("2013-02-21T17:08:35.888Z") } ],
+"push_token" : "d5a413a75b80bf2f2b3f6670098a8f09c6743b76f4d4dc97ccb0da49fa365365" }

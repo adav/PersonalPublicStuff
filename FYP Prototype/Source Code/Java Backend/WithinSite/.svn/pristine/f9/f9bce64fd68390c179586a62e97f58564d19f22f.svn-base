@@ -1,0 +1,88 @@
+package Model.API.Requests.SimpleNearbySocial;
+
+import Model.RecommendationModel.CustomTypes.LongLat;
+import Model.RecommendationModel.CustomTypes.POJOs.Results.WithinSiteResults;
+import Model.RecommendationModel.CustomTypes.POJOs.User.WithinSiteUser;
+import Model.RecommendationModel.CustomTypes.POJOs.User.WithinSiteUserLocation;
+import Model.RecommendationModel.Models.RecommendationModel;
+import Model.RecommendationModel.Models.RecommendationModelInterface;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+
+/**
+ * User: adav
+ */
+public class NearbyServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // Find Nearby Recommended Places TODO
+        // Find Nearby Foursquare Places
+
+        // Find Nearby Places that Facebook Friends have been to
+
+
+        ServletOutputStream out = response.getOutputStream();
+        response.setContentType("application/json");
+
+        DB db = Model.Util.getDB();
+
+        try {
+            RecommendationModelInterface model = RecommendationModel.getModel();
+            if (request.getParameter("email") != null) {
+                db.requestStart();
+                db.requestEnsureConnection();
+
+
+                DBCollection userColl = db.getCollection("withinsite.users");
+                userColl.setObjectClass(WithinSiteUser.class);
+
+                // Now get the new user object:
+                DBCursor dbCursor = userColl.find(new BasicDBObject("email", request.getParameter("email")));
+                try {
+
+                    if (dbCursor.count() == 1 & dbCursor.hasNext()) {
+                        WithinSiteUser userDBObject = (WithinSiteUser) dbCursor.next();
+
+                        //TODO Pass to a model and find nearby
+                        WithinSiteResults results = model.generateRecommendedNearbyResults(userDBObject);
+
+                        out.print(results.toString(4));
+
+                    }
+                } finally {
+                    dbCursor.close();
+                }
+
+            } else {
+                WithinSiteResults results = model.generateUninformedNearbyResults(
+                        new LongLat(
+                                Double.valueOf(request.getParameter("longitude")),
+                                Double.valueOf(request.getParameter("latitude"))
+                        )
+                );
+
+                out.print(results.toString(4));
+            }
+        } catch (Exception e) {
+            out.print("{\"result\":\"error\", \"message\":\"" + e.getMessage() + "\"}");
+        } finally {
+            db.requestDone();
+        }
+        out.close();
+    }
+}

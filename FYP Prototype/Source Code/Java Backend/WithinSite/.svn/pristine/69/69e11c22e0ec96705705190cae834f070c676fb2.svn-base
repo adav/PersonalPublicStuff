@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+           version="2.5">
+
+    <servlet>
+        <description>Register user to database</description>
+        <display-name>RegisterUser</display-name>
+        <servlet-name>RegisterUserServlet</servlet-name>
+        <servlet-class>Model.API.Requests.Users.RegisterUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InitialiseDatabaseServlet</servlet-name>
+        <servlet-class>Model.InitialiseDatabaseServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>TestPushNotificationServlet</servlet-name>
+        <servlet-class>Model.API.ASyncResponses.PushNotifications.ApplePushNotification.TestPushNotificationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServerStatusServlet</servlet-name>
+        <servlet-class>Model.API.Requests.ServerStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VerifyUserServlet</servlet-name>
+        <servlet-class>Model.API.Requests.Users.VerifyUserServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NearbyServlet</servlet-name>
+        <servlet-class>Model.API.Requests.SimpleNearbySocial.NearbyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateUserLocationServlet</servlet-name>
+        <servlet-class>Model.API.Requests.Users.UpdateUserLocationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ServerStatusServlet</servlet-name>
+        <url-pattern>/ServerStatus</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>RegisterUserServlet</servlet-name>
+        <url-pattern>/RegisterUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>VerifyUserServlet</servlet-name>
+        <url-pattern>/VerifyUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>UpdateUserLocationServlet</servlet-name>
+        <url-pattern>/UpdateUserLocation</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>InitialiseDatabaseServlet</servlet-name>
+        <url-pattern>/InitialiseDB</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>NearbyServlet</servlet-name>
+        <url-pattern>/Nearby</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>TestPushNotificationServlet</servlet-name>
+        <url-pattern>/TestPush</url-pattern>
+    </servlet-mapping>
+</web-app>

@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="JavaPNS_2">
+    <CLASSES>
+      <root url="file://$USER_HOME$/lib/JavaPNS_2.3_beta" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$USER_HOME$/lib/JavaPNS_2.3_beta/doc/javadoc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$USER_HOME$/lib/JavaPNS_2.3_beta/src" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/lib/JavaPNS_2.3_beta" recursive="false" />
+  </library>
+</component>
